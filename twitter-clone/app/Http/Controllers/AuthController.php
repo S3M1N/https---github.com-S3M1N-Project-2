@@ -23,14 +23,13 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:8',
         ]);
-        dd($validated);
+       $validated;
        $user =  User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        Mail::to($user->email)->send(new WelcomeEmail($user));
         return redirect()->route('dashboard')->with('success','Account created successfully');
     }
 
